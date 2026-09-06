@@ -1,21 +1,8 @@
-const blogs = [
-  {
-    id: 1,
-    title: "Ostakaa makkaraa",
-    author: "Sepi Kumpulainen",
-    url: "www.sepi.com",
-    likes: 10,
-  },
-  {
-    id: 2,
-    title: "Aina voi luovuttaa",
-    author: "Reijjo",
-    url: "www.reijjo.com",
-    likes: 5,
-  },
-];
+import { getBlogs } from "../services/blogs";
 
 export default function Blogs() {
+  const blogs = getBlogs();
+
   return (
     <main>
       <h2>Blogs</h2>
