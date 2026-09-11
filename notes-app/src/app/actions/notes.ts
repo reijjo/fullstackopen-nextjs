@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { addNote } from "@/app/services/notes";
+import { addNote, toggleImportance } from "@/app/services/notes";
 import { revalidatePath } from "next/cache";
 
 export const createNote = async (formData: FormData) => {
@@ -12,4 +12,12 @@ export const createNote = async (formData: FormData) => {
 
   revalidatePath("/notes");
   redirect("/notes");
+};
+
+export const toggleNoteImportance = async (formData: FormData) => {
+  const id = Number(formData.get("id"));
+  toggleImportance(id);
+
+  revalidatePath(`/notes/${id}`);
+  revalidatePath("/notes");
 };
