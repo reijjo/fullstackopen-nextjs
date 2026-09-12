@@ -1,23 +1,17 @@
 import Link from "next/link";
-import { getBlogs } from "../services/blogs";
+import { filterBlogByTitle, getBlogs } from "../services/blogs";
 
-export default async function Blogs({
-  searchParams,
-}: {
+type BlogsProps = {
   searchParams: Promise<{ filter?: string }>;
-}) {
+};
+
+export default async function Blogs({ searchParams }: BlogsProps) {
   const { filter } = await searchParams;
 
-  const allBlogs = getBlogs();
+  const allBlogs = await getBlogs();
   const mostLikesOnTop = allBlogs.sort((a, b) => b.likes - a.likes);
 
-  const filterBlogByTitle = (filter?: string) => {
-    if (!filter) return mostLikesOnTop;
-
-    return mostLikesOnTop.filter((blog) => blog.title.includes(filter));
-  };
-
-  const blogs = filterBlogByTitle(filter);
+  const blogs = filterBlogByTitle(mostLikesOnTop, filter);
 
   return (
     <main>

@@ -1,37 +1,52 @@
-const blogs = [
-  {
-    id: 1,
-    title: "Ostakaa makkaraa",
-    author: "Sepi Kumpulainen",
-    url: "www.sepi.com",
-    likes: 10,
-  },
-  {
-    id: 2,
-    title: "Aina voi luovuttaa",
-    author: "Reijjo",
-    url: "www.reijjo.com",
-    likes: 5,
-  },
-];
+import { eq } from "drizzle-orm";
+import { db } from "@/db";
+import { blogs } from "@/db/schema";
 
-let nextId = 3;
-
-export const getBlogs = () => {
-  return blogs;
+type Blogs = {
+  id: number;
+  title: string;
+  author: string;
+  url: string;
+  likes: number;
 };
 
-export const addBlog = (title: string, author: string, url: string) => {
-  blogs.push({ id: nextId++, title, author, url, likes: 0 });
+export const getBlogs = () => {
+  return db.query.blogs.findMany();
+};
+
+export const addBlog = async (title: string, author: string, url: string) => {
+  await db.insert(blogs).values({ title, author, url });
 };
 
 export const getBlogById = (id: number) => {
-  return blogs.find((blog) => blog.id === id);
+  return db.query.blogs.findFirst({
+    where: eq(blogs.id, id),
+  });
 };
 
-export const addLike = (id: number) => {
-  const blog = blogs.find((b) => b.id === id);
+export const addLike = async (id: number) => {
+  const blog = await getBlogById(id);
+
   if (blog) {
-    blog.likes++;
+    await db
+      .update(blogs)
+      .set({ likes: blog.likes + 1 })
+      .where(eq(blogs.id, id));
   }
 };
+
+export const filterBlogByTitle = (blogs: Blogs[], filter?: string) => {
+  if (!filter) return blogs;
+
+  return blogs.filter((blog) => blog.title.includes(filter));
+};
+
+// export const filterBlogByTitle = async (filter: string) => {
+//   if (filter) {
+//     return db.query.blogs.findMany({
+//       where: eq(blogs.title.includes(filter), filter),
+//     });
+//   }
+
+//   return db.query.blogs.findMany();
+// };
