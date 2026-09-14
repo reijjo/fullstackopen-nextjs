@@ -27,6 +27,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {" | "}
           <Link href="/notes">notes</Link>
           {" | "}
+          <Link href="/users">users</Link>
+          {" | "}
           <Link href="/notes/new">create new</Link>
           {" | "}
         </nav>

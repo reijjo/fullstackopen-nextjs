@@ -8,6 +8,20 @@
       "when": 1789211445845,
       "tag": "0000_aromatic_infant_terrible",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789302222850,
+      "tag": "0001_greedy_nighthawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789302433677,
+      "tag": "0002_unknown_gideon",
+      "breakpoints": true
     }
   ]
 }
