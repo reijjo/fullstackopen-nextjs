@@ -5,7 +5,23 @@ import { redirect } from "next/navigation";
 import { addBlog, addLike } from "../services/blogs";
 import { auth } from "@/auth";
 
-export const createBlog = async (formData: FormData) => {
+type BlogFormState = {
+  errors?: {
+    title?: string;
+    author?: string;
+    url?: string;
+  };
+  values?: {
+    title: string;
+    author: string;
+    url: string;
+  };
+};
+
+export const createBlog = async (
+  _prevState: BlogFormState,
+  formData: FormData,
+): Promise<BlogFormState> => {
   const session = await auth();
   if (!session) {
     redirect("/login");
@@ -14,6 +30,31 @@ export const createBlog = async (formData: FormData) => {
   const title = formData.get("title") as string;
   const author = formData.get("author") as string;
   const url = formData.get("url") as string;
+
+  const errors: BlogFormState["errors"] = {};
+
+  if (!title || title.length < 5) {
+    errors.title = "Title must have at least 5 characters.";
+  }
+
+  if (!author || author.length < 5) {
+    errors.author = "Author must have at least 5 characters.";
+  }
+
+  if (!url || url.length < 5) {
+    errors.url = "Url must have at least 5 characters.";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return {
+      errors,
+      values: {
+        title,
+        author,
+        url,
+      },
+    };
+  }
 
   await addBlog(title, author, url);
 
