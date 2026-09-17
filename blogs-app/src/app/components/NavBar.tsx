@@ -6,6 +6,8 @@ import Link from "next/link";
 export default function NavBar() {
   const { data: session } = useSession();
 
+  console.log("session", session);
+
   return (
     <nav>
       <Link href="/">home</Link>
@@ -22,7 +24,11 @@ export default function NavBar() {
           <button onClick={() => signOut()}>logout</button>
         </>
       ) : (
-        <Link href="/login">login</Link>
+        <>
+          <Link href="/login">login</Link>
+          {" | "}
+          <Link href="/register">register</Link>
+        </>
       )}
     </nav>
   );

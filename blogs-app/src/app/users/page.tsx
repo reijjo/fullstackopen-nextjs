@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getUsers } from "../actions/users";
+import { getUsers } from "../services/users";
 
 export default async function Users() {
   const users = await getUsers();

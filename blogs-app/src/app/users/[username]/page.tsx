@@ -1,4 +1,4 @@
-import { getUserWithBlogs } from "@/app/actions/users";
+import { getUserWithBlogs } from "@/app/services/users";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
