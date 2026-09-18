@@ -14,15 +14,28 @@ export default async function Blogs({ searchParams }: BlogsProps) {
   const blogs = filterBlogByTitle(mostLikesOnTop, filter);
 
   return (
-    <main>
-      <h2>Blogs</h2>
+    <main className="max-w-2xl mx-auto p-6 flex flex-col gap-4">
+      <h2 className="text-2xl font-bold">Blogs</h2>
       <form>
-        <input type="text" placeholder="Search a blog" name="filter" />
-        <button type="submit">Search</button>
+        <input
+          className="px-2 py-1 rounded-sm border border-gray-800 bg-white"
+          type="text"
+          placeholder="Search a blog"
+          name="filter"
+        />
+        <button
+          className="border rounded-sm px-2 py-1 bg-olive-200 cursor-pointer hover:bg-olive-100"
+          type="submit"
+        >
+          Search
+        </button>
       </form>
-      <ul>
+      <ul className="space-y-4">
         {blogs.map((blog) => (
-          <li key={blog.id}>
+          <li
+            className="border rounded p-2 cursor-pointer bg-white hover:bg-olive-100 shadow-md"
+            key={blog.id}
+          >
             <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
             <p>
               by {blog.author} - {blog.likes} likes

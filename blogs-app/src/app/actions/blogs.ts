@@ -16,6 +16,7 @@ type BlogFormState = {
     author: string;
     url: string;
   };
+  success: boolean;
 };
 
 export const createBlog = async (
@@ -53,13 +54,14 @@ export const createBlog = async (
         author,
         url,
       },
+      success: false,
     };
   }
 
   await addBlog(title, author, url);
 
   revalidatePath("/blogs");
-  redirect("/blogs");
+  return { errors: {}, success: true };
 };
 
 export const addLikeToBlog = async (formData: FormData) => {

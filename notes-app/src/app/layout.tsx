@@ -1,8 +1,10 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import AuthSessionProvider from "./components/SessionProvider";
 import NavBar from "./components/NavBar";
+import { NotificationProvider } from "./components/NotificationContext";
+import Notification from "./components/Notification";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,11 +23,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background text-foreground`}
+    >
       <body>
         <AuthSessionProvider>
-          <NavBar />
-          {children}
+          <NotificationProvider>
+            <NavBar />
+            <Notification />
+            {children}
+          </NotificationProvider>
         </AuthSessionProvider>
       </body>
     </html>

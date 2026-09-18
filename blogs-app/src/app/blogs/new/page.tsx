@@ -1,7 +1,9 @@
 "use client";
 
 import { createBlog } from "@/app/actions/blogs";
-import { useActionState } from "react";
+import { useNotification } from "@/app/components/NotificationContext";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect } from "react";
 
 const initialState = {
   errors: {},
@@ -10,32 +12,44 @@ const initialState = {
     author: "",
     url: "",
   },
+  success: false,
 };
 
 export default function NewBlog() {
   const [state, formAction] = useActionState(createBlog, initialState);
+  const { showNotification } = useNotification();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state.success) {
+      showNotification("blog created");
+      router.push("/blogs");
+    }
+  }, [state, showNotification, router]);
 
   return (
-    <div>
-      <h2>Create new blog</h2>
-      <form action={formAction}>
+    <div className="max-w-2xl mx-auto p-6 flex flex-col gap-4">
+      <h2 className="text-2xl font-bold">Create new blog</h2>
+      <form className="flex flex-col gap-4" action={formAction}>
         <div>
-          <label>
+          <label className="flex gap-2 items-center">
             Title
             <input
+              className="px-2 py-1 rounded-sm border border-gray-800 bg-white"
               type="text"
               name="title"
               defaultValue={state.values?.title}
             />
           </label>
           {state.errors?.title && (
-            <p style={{ color: "red " }}>{state.errors.title}</p>
+            <p style={{ color: "red" }}>{state.errors.title}</p>
           )}
         </div>
         <div>
-          <label>
+          <label className="flex gap-2 items-center">
             Author
             <input
+              className="px-2 py-1 rounded-sm border border-gray-800 bg-white"
               type="text"
               name="author"
               defaultValue={state.values?.author}
@@ -46,15 +60,25 @@ export default function NewBlog() {
           )}
         </div>
         <div>
-          <label>
+          <label className="flex gap-2 items-center">
             Url
-            <input type="text" name="url" defaultValue={state.values?.url} />
+            <input
+              className="px-2 py-1 rounded-sm border border-gray-800 bg-white"
+              type="text"
+              name="url"
+              defaultValue={state.values?.url}
+            />
           </label>
           {state.errors?.url && (
             <p style={{ color: "red " }}>{state.errors.url}</p>
           )}
         </div>
-        <button type="submit">Create</button>
+        <button
+          className="w-max border rounded-sm px-2 py-1 bg-olive-200 cursor-pointer hover:bg-olive-100"
+          type="submit"
+        >
+          Create
+        </button>
       </form>
     </div>
   );
