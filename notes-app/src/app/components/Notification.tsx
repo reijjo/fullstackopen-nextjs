@@ -1,6 +1,5 @@
 "use client";
 
-import { CSSProperties } from "react";
 import { useNotification } from "./NotificationContext";
 
 export default function Notification() {
@@ -8,7 +7,7 @@ export default function Notification() {
 
   if (!message) return null;
 
-  const style: CSSProperties = {
+  const style: React.CSSProperties = {
     padding: "10px 16px",
     marginBottom: "10px",
     borderRadius: "4px",

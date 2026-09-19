@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState } from "react";
 
 type NotificationType = "success" | "error";
 
@@ -16,7 +16,11 @@ const NotificationContext = createContext<NotificationContextType>({
   showNotification: () => {},
 });
 
-export const NotificationProvider = ({ children }: { children: ReactNode }) => {
+export const NotificationProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [message, setMessage] = useState("");
   const [type, setType] = useState<NotificationType>("success");
 
