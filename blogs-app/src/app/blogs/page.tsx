@@ -16,7 +16,7 @@ export default async function Blogs({ searchParams }: BlogsProps) {
   return (
     <main className="max-w-2xl mx-auto p-6 flex flex-col gap-4">
       <h2 className="text-2xl font-bold">Blogs</h2>
-      <form>
+      <form className="flex gap-2">
         <input
           className="px-2 py-1 rounded-sm border border-gray-800 bg-white"
           type="text"
