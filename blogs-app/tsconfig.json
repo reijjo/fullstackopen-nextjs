@@ -28,9 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts",
-    "../notes-app/src/app/components/NotificationContext.tsx",
-    "../notes-app/src/app/components/Notification.tsx"
+    "**/*.mts"
   ],
   "exclude": ["node_modules"]
 }
