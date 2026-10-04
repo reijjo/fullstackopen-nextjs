@@ -38,6 +38,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           id: String(user.id),
           name: user.name,
           email: user.username,
+          token: user.token,
         };
       },
     }),
@@ -47,5 +48,29 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   session: {
     strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, user, trigger }) {
+      if (user) {
+        token.userId = user.id;
+        token.token = user.token;
+      }
+
+      if (trigger === "update" && token.userId) {
+        const dbUser = await db.query.users.findFirst({
+          where: eq(users.id, Number(token.userId)),
+        });
+
+        token.token = dbUser?.token ?? null;
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.token = token.token as string | null;
+      }
+      return session;
+    },
   },
 });

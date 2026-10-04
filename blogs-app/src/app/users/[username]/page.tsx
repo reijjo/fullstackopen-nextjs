@@ -21,7 +21,7 @@ export default async function UserPage({ params }: UserPageProps) {
       <h3>Blogs</h3>
       <ul>
         {user.blogs.map((blog) => (
-          <li key={user.id}>
+          <li key={blog.id}>
             <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
           </li>
         ))}
