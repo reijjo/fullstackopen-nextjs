@@ -2,7 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { addBlog, addLike } from "../services/blogs";
+import {
+  addBlog,
+  addLike,
+  addToReadingList,
+  markAsRead,
+} from "../services/blogs";
 import { auth } from "@/auth";
 
 type BlogFormState = {
@@ -70,4 +75,21 @@ export const addLikeToBlog = async (formData: FormData) => {
 
   revalidatePath(`/blogs/${id}`);
   revalidatePath("/blogs");
+};
+
+export const addBlogToReadingList = async (formData: FormData) => {
+  const id = Number(formData.get("blogId"));
+
+  await addToReadingList(id);
+
+  revalidatePath(`/blogs/${id}`);
+  revalidatePath("/blogs");
+};
+
+export const markBlogAsRead = async (formData: FormData) => {
+  const id = Number(formData.get("blogId"));
+
+  await markAsRead(id);
+
+  revalidatePath(`/me`);
 };
