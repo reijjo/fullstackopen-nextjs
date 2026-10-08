@@ -1,12 +1,11 @@
 import { getCurrentUser } from "../services/session";
-import { getMe } from "../services/me";
 import Link from "next/link";
 import { getBlogById } from "../services/blogs";
 import { markBlogAsRead } from "../actions/blogs";
 
 export default async function ReadingList() {
-  const userToken = await getCurrentUser();
-  const user = await getMe(String(userToken?.token));
+  const user = await getCurrentUser();
+
   const blogsToRead = user?.readingList.filter((b) => b.read === false);
   const blogsRead = user?.readingList.filter((b) => b.read === true);
 
@@ -16,10 +15,15 @@ export default async function ReadingList() {
   };
 
   return (
-    <div className="border-b flex flex-col gap-1 py-3 pb-6">
-      <h2 className="text-3xl font-bold">Reading List</h2>
-      {blogsToRead && blogsToRead?.length > 0 && (
-        <div className="py-4">
+    <div
+      className="border-b flex flex-col gap-1 py-3 pb-6"
+      data-testid="reading-list-section"
+    >
+      <h2 className="text-3xl font-bold" data-testid="empty-reading-list">
+        Reading List
+      </h2>
+      {blogsToRead && blogsToRead?.length > 0 ? (
+        <div className="py-4" data-testId="unread-section">
           <h3 className="text-2xl font-bold">Unread ({blogsToRead.length})</h3>
           {blogsToRead.map((b) => (
             <form
@@ -30,6 +34,7 @@ export default async function ReadingList() {
               <input type="hidden" name="blogId" value={b.blogId} />
               <Link href={`/blogs/${b.blogId}`}>{getBlogTitle(b.blogId)}</Link>
               <button
+                data-testid={`mark-read-${b.blogId}`}
                 className="border rounded-sm px-2 py-1 bg-olive-200 cursor-pointer hover:bg-olive-100"
                 type="submit"
               >
@@ -38,6 +43,8 @@ export default async function ReadingList() {
             </form>
           ))}
         </div>
+      ) : (
+        <div data-testid="no-unread-blogs">No unread blogs</div>
       )}
 
       {blogsRead && blogsRead.length > 0 && (

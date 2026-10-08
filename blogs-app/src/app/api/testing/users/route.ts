@@ -24,7 +24,8 @@ export const POST = async (request: NextRequest) => {
     await db.insert(users).values({ username, name, passwordHash });
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    console.error("create user route rror", error);
     return NextResponse.json(
       { error: "Something shady happened" },
       { status: 400 },

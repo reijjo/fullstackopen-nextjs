@@ -29,7 +29,9 @@ export default function RegisterPage() {
             />
           </label>
           {state.errors?.username && (
-            <p style={{ color: "red" }}>{state.errors.username}</p>
+            <p style={{ color: "red" }} data-testid="username-error">
+              {state.errors.username}
+            </p>
           )}
         </div>{" "}
         <div>
@@ -64,10 +66,14 @@ export default function RegisterPage() {
             />
           </label>
           {state.errors?.passwordConfirm && (
-            <p style={{ color: "red" }}>{state.errors.passwordConfirm}</p>
+            <p style={{ color: "red" }} data-testId="passwordConfirm-error">
+              {state.errors.passwordConfirm}
+            </p>
           )}
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" data-testid="register-button">
+          Register
+        </button>
       </form>
     </div>
   );

@@ -61,7 +61,7 @@ export default function NewBlog() {
         </div>
         <div>
           <label className="flex gap-2 items-center">
-            Url
+            URL
             <input
               className="px-2 py-1 rounded-sm border border-gray-800 bg-white"
               type="text"
@@ -76,6 +76,7 @@ export default function NewBlog() {
         <button
           className="w-max border rounded-sm px-2 py-1 bg-olive-200 cursor-pointer hover:bg-olive-100"
           type="submit"
+          data-testid="create-blog-button"
         >
           Create
         </button>

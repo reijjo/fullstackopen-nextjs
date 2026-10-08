@@ -22,22 +22,24 @@ export default async function Blogs({ searchParams }: BlogsProps) {
           type="text"
           placeholder="Search a blog"
           name="filter"
+          data-testid="filter-input"
         />
         <button
           className="border rounded-sm px-2 py-1 bg-olive-200 cursor-pointer hover:bg-olive-100"
           type="submit"
+          data-testid="search-button"
         >
           Search
         </button>
       </form>
-      <ul className="space-y-4">
+      <ul className="space-y-4" data-testid="blogs-list">
         {blogs.map((blog) => (
           <li
             className="border rounded p-2 cursor-pointer bg-white hover:bg-olive-100 shadow-md"
             key={blog.id}
           >
             <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
-            <p>
+            <p data-testid="blog-detail">
               by {blog.author} - {blog.likes} likes
             </p>
           </li>

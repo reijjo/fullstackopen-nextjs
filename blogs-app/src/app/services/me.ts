@@ -13,9 +13,9 @@ export const createToken = async () => {
   await db.update(users).set({ token }).where(eq(users.id, user.id));
 };
 
-export const getMe = async (token: string) => {
+export const getMe = async (username: string) => {
   const user = await db.query.users.findFirst({
-    where: eq(users.token, token),
+    where: eq(users.username, username),
     with: { blogs: true, readingList: true },
   });
 

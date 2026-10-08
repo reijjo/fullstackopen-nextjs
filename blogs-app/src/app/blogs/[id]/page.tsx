@@ -20,10 +20,14 @@ export default async function BlogPage({
 
   return (
     <div className="max-w-2xl mx-auto p-6 flex flex-col gap-2 border border-gray-500 rounded-md bg-olive-50 my-8">
-      <h2 className="text-2xl font-bold">{blog.title}</h2>
-      <h3 className="text-xl">by {blog.author}</h3>
+      <h2 className="text-2xl font-bold" data-testId="blog-title">
+        {blog.title}
+      </h2>
+      <h3 className="text-xl" data-testId="blog-author">
+        by {blog.author}
+      </h3>
       <p>{blog.url}</p>
-      <p>{blog.likes} likes</p>
+      <p data-testId="blog-detail">{blog.likes} likes</p>
       <div className="flex gap-4">
         <form action={addLikeToBlog} className="flex gap-4">
           <input type="hidden" name="id" value={blog.id} />
@@ -42,6 +46,7 @@ export default async function BlogPage({
               className="border rounded-sm px-4 py-2 bg-olive-200 cursor-pointer hover:bg-olive-100 disabled:bg-gray-400"
               type="submit"
               disabled={isInReadingList ? true : false}
+              data-testId="add-to-reading-list-button"
             >
               {!isInReadingList ? "Add to reading list" : "already in list"}
             </button>
